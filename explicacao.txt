@@ -1,0 +1,52 @@
+FACTORY METHOD -  Utilizada para implementar tipos de pedidos
+
+    Interface Order:
+Define o contrato para diferentes tipos de pedidos.
+
+    Classes Concretas (DeliveryOrder e TakeoutOrder):
+Implementam Order para fornecer descrições específicas de cada tipo de pedido.
+
+    OrderFactory (Classe Abstrata):
+Define um método de criação de pedidos createOrder(), que deve ser implementado pelas subclasses.
+
+    DeliveryOrderFactory e TakeoutOrderFactory (Fábricas Concretas):
+Implementam createOrder() para criar instâncias específicas de pedidos.
+
+    index.ts:
+Cria instâncias de fábricas e usa o método showOrderDetails() para exibir os detalhes dos pedidos.
+
+    Como o Factory Method Funciona na Prática
+A classe OrderFactory delega a responsabilidade de criar objetos de Order para suas subclasses.
+DeliveryOrderFactory e TakeoutOrderFactory decidem qual classe concreta de pedido será criada.
+Se novos tipos de pedidos forem necessários no futuro, é possível criar uma nova classe que implementa Order e uma nova fábrica específica, sem precisar modificar as fábricas existentes ou a classe abstrata.
+O Factory Method é útil porque permite adicionar novas variantes de pedidos com flexibilidade, tornando o código mais extensível e fácil de manter.
+
+COMMAND - Ações nos pedidos
+
+    Interface Command:
+Define o contrato que todos os comandos devem implementar, com um método execute().
+
+    Classes Concretas (ConfirmOrderCommand e CancelOrderCommand):
+Implementam a interface Command e contêm a lógica específica para confirmar e cancelar um pedido.
+
+ConfirmOrderCommand: Implementa o método execute() para confirmar um pedido, atualizando seu estado e exibindo uma mensagem.
+
+CancelOrderCommand: Implementa o método execute() para cancelar um pedido, exibindo uma mensagem de cancelamento caso o pedido esteja confirmado.
+
+    Classe OrderInvoker:
+Armazena uma referência a um comando (Command).
+Possui métodos setCommand() para definir o comando e executeCommand() para executar o comando atribuído.
+
+    Classes de Pedido (DeliveryOrder e TakeoutOrder):
+São usadas como receptoras do comando, ou seja, são os objetos que terão suas ações executadas (confirmar ou cancelar) por meio dos comandos.
+
+    index.ts:
+Serve como ponto de interação, onde o usuário escolhe uma opção e a aplicação define qual comando será executado.
+Cria instâncias de pedidos, atribui comandos de confirmação ou cancelamento a partir da escolha do usuário e executa esses comandos através do OrderInvoker.
+
+    Como o Command Funciona na Prática:
+A interface Command abstrai as operações (confirmar e cancelar pedidos), permitindo que sejam tratadas de forma uniforme.
+As classes concretas (ConfirmOrderCommand e CancelOrderCommand) encapsulam as ações específicas em objetos, permitindo que cada ação seja executada de forma independente.
+A OrderInvoker invoca os comandos, mas não precisa saber detalhes sobre como as ações são realizadas, apenas qual comando executar.
+O Command facilita a implementação de ações que podem ser feitas, desfeitas ou adiadas de forma flexível.
+Adicionar novas ações (por exemplo, um comando para atualizar um pedido) pode ser feito criando uma nova classe que implementa Command, sem modificar os comandos existentes.
